@@ -8,6 +8,7 @@ public class ListNode {
     }
 }*/
 //寻找倒数第K个节点
+//或者 使用Stack，将结点压入栈中，再取出第k个就好
 public class Solution {
     public ListNode FindKthToTail(ListNode head,int k) {
 		if(head == null)
