@@ -1,0 +1,39 @@
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+import java.util.HashMap;
+public class Solution {
+    public TreeNode reConstructBinaryTree(int [] pre,int [] in) {
+        if(pre == null || in == null){
+            return null;
+        }
+        //中序的节点在那个位置
+        //前序遍历序列{1,2,4,7,3,5,6,8}
+        //-----------------------------
+        //中序遍历序列{4,7,2,1,5,3,8,6}
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i = 0; i < in.length; i++){
+            map.put(in[i], i);//获取中序节点的位置
+        }
+        return preIn(pre,0,pre.length-1,in,0,in.length-1,map);
+    }
+                            
+    public TreeNode preIn(int[] p, int pi,int pj,int[] n,int ni,int nj,HashMap<Integer,Integer> map){
+        if(pi>pj){
+            return null;
+        }
+        TreeNode head = new TreeNode(p[pi]);
+        int index = map.get(p[pi]);//通过前序节点来获得中序节点的位置
+        head.left=preIn(p,pi+1,pi+(index-ni),n,ni,index-1,map);//head的左子树上有pi+1--pi+index-ni   ni-index-1
+        head.right=preIn(p,pi+(index-ni)+1,pj,n,index+1,nj,map);
+        return head;
+        
+    }
+    
+}
