@@ -1,6 +1,8 @@
 package com.lion.Chapter1;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 生成窗口最大值数组
@@ -10,25 +12,38 @@ import java.util.LinkedList;
  * 并且会看 6 的下标是否在窗口内，不在的话 踢出6 ，变成 5， 那么窗口最大值为5
  */
 public class MaxWindows {
-    public int[] getMaxWindows(int[] arr, int w) {
-        if (arr == null || w < 1 || arr.length == 0) {
+    public static int[] getMaxWindows(int[] arr, int w) {
+        if (arr == null || w < 0 || arr.length < w) {
             return null;
         }
-        LinkedList<Integer> qmax = new LinkedList<Integer>();
-        int[] res = new int[arr.length-w+1];
+        int[] res = new int[arr.length - w + 1];
+        LinkedList<Integer> qmax = new LinkedList<>();
         int index = 0;
         for (int i = 0; i < arr.length; i++) {
-            while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[i]) {
-                qmax.pollLast();
+            if (qmax.isEmpty()) {
+                qmax.addLast(i);
+            } else {
+                while (!qmax.isEmpty() && arr[qmax.peekLast()] <= arr[i]) {
+                    qmax.pollLast();
+                }
+                qmax.addLast(i);
             }
-            qmax.addLast(i);
-            if (qmax.peekFirst() == i - w) {
+            if (qmax.peekFirst() == (i - w)) {
                 qmax.pollFirst();
             }
-            if (i >= w - 1) {
+            if (i +1 >= w ) {
                 res[index++] = arr[qmax.peekFirst()];
             }
         }
         return res;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = new int[]{4,3,5,4,3,3,6,7};
+        int[] res = getMaxWindows(arr, 3);
+        for (int re : res) {
+            System.out.println(re);
+        }
+
     }
 }
