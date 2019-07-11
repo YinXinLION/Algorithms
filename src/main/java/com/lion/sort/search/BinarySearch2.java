@@ -87,4 +87,39 @@ public class BinarySearch2 {
         }
         return -1;
     }
+
+    /**
+     * 循环数组判断
+     * @param s
+     * @param key
+     * @return
+     */
+    public static int binary5(int[] s, int key) {
+        if (s.length <= 0) {
+            return -1;
+        }
+        int left = 0;
+        int right = s.length - 1;
+        while (left <= right) {
+            int mid = left + ((right - left) / 2);
+            if (s[mid] == key) {
+                return mid;
+            }
+            //转折点在右边(大-> 超大  小 -> 大)
+            if (s[left] <= s[mid]) {
+                if (key >= s[left] && key < s[mid]) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            } else {
+                if (key > s[mid] && key <= s[right]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
 }
