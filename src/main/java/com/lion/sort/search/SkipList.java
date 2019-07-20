@@ -95,7 +95,7 @@ public class SkipList {
         private int data = -1;
         // 在每一层级的位置
         private Node forwards[] = new Node[MAX_LEVEL];
-        private int maxLevel = 0;
+        private int maxLevel = 0; // 这个节点最大的level
 
         @Override
         public String toString() {
