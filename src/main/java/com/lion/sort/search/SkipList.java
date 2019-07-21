@@ -28,25 +28,25 @@ public class SkipList {
         }
     }
 
-    //插入
+    //插入 head为null节点
     public void insert(int value) {
-        int level = randomLevel();
-        Node newNode = new Node();
+        int level = randomLevel();//随机选取level
+        Node newNode = new Node();//创建一个新节点
         newNode.data = value;
         newNode.maxLevel = level;
         Node[] update = new Node[level];
+        // 初始化
         for (int i = 0; i < level; i++) {
             update[i] = head;
         }
         Node p = head;
-        // 找到所有要插入的位置
+        // 找到所有要插入的位置 更新到update数组里
         for (int i = level - 1; i >= 0; i--) {
             while (p.forwards[i] != null && p.forwards[i].data < value) {
                 p = p.forwards[i];
             }
             update[i] = p;
         }
-
         for (int i = 0; i < level; ++i) {
             newNode.forwards[i] = update[i].forwards[i];
             update[i].forwards[i] = newNode;
